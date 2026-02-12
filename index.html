@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark h-full overflow-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Clarity Desk | Secure Decision Support</title>
+    <link rel="manifest" href="manifest.json">
+    <meta id="theme-meta" name="theme-color" content="#000000">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Early theme detection to prevent flash
+      (function() {
+        const savedTheme = localStorage.getItem('clarity_theme');
+        if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              ios: {
+                red: 'var(--system-red)',
+                indigo: 'var(--system-indigo)',
+                green: 'var(--system-green)',
+                bg: 'var(--system-bg)',
+                canvas: 'var(--system-canvas)',
+                label: 'var(--system-label)',
+                secondary: 'var(--system-secondary)',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+      :root {
+        --system-bg: #F2F2F7;
+        --system-canvas: #FFFFFF;
+        --system-label: #1C1C1E;
+        --system-secondary: #8E8E93;
+        --system-gray: #8E8E93;
+        --system-red: #FF3B30;
+        --system-indigo: #5856D6;
+        --system-green: #34C759;
+        --ios-easing: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      html.dark {
+        --system-bg: #000000;
+        --system-canvas: #1C1C1E;
+        --system-label: #FFFFFF;
+        --system-secondary: #8E8E93;
+        --system-red: #FF453A;
+        --system-indigo: #5E5CE6;
+        --system-green: #32D74B;
+      }
+
+      body { 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--system-bg);
+        color: var(--system-label);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        height: 100%;
+        overflow: hidden;
+        overscroll-behavior: none;
+        letter-spacing: -0.011em;
+        transition: background-color 0.3s var(--ios-easing), color 0.3s var(--ios-easing);
+      }
+
+      .apple-transition {
+        transition: all 0.2s var(--ios-easing);
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px) saturate(190%);
+        -webkit-backdrop-filter: blur(20px) saturate(190%);
+      }
+
+      html.dark .glass {
+        background: rgba(28, 28, 30, 0.8);
+      }
+
+      .sidebar-glass {
+        background: rgba(242, 242, 247, 0.85);
+        backdrop-filter: blur(30px) saturate(150%);
+        -webkit-backdrop-filter: blur(30px) saturate(150%);
+      }
+
+      html.dark .sidebar-glass {
+        background: rgba(28, 28, 30, 0.85);
+      }
+
+      @media print {
+        @page { size: A4; margin: 0; }
+        body { 
+          background: white !important; 
+          color: black !important; 
+          overflow: visible !important; 
+          height: auto !important; 
+        }
+        #root > div > main {
+          overflow: visible !important;
+          height: auto !important;
+          position: static !important;
+        }
+        .no-print { display: none !important; }
+        .print-only { display: block !important; }
+        
+        /* Ensure the report container fills the printed page correctly */
+        .report-page-container {
+          box-shadow: none !important;
+          margin: 0 !important;
+          width: 100% !important;
+          display: block !important;
+        }
+      }
+
+      ::-webkit-scrollbar { width: 0px; height: 0px; }
+
+      .ios-inset-group {
+        background: var(--system-canvas);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      }
+
+      .tap-feedback:active {
+        opacity: 0.7;
+        transform: scale(0.98);
+      }
+
+      @keyframes fadeInScale {
+        from { transform: translateY(10px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      .animate-ios-entry {
+        animation: fadeInScale 0.4s var(--ios-easing);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="h-full">
+    <div id="root" class="h-full"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then(registration => {
+            console.log('SW registered:', registration);
+          }).catch(error => {
+            console.log('SW registration failed:', error);
+          });
+        });
+      }
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

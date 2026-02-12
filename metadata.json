@@ -1,0 +1,7 @@
+{
+  "name": "Clarity Desk",
+  "description": "An evidence-based, non-diagnostic decision support platform for hybrid and electric vehicles, translating complex technical signals into plain language.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
